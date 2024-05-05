@@ -29,10 +29,12 @@ Copy code
 sudo docker run -d --restart unless-stopped -it \
 --name n8n \
 -p 5678:5678 \
+-e N8N_EXTERNAL_URL="https://aibot.anagata.in" \
 -e N8N_SECURE_COOKIE=false \
--e N8N_HOST="simply.anagata.in" \
--e VUE_APP_URL_BASE_API="https://simply.anagata.in/" \
--e WEBHOOK_TUNNEL_URL="https://simply.anagata.in/" \
+-e N8N_HOST="aibot.anagata.in" \
+-e VUE_APP_URL_BASE_API="https://aibot.anagata.in/" \
+-e WEBHOOK_TUNNEL_URL="https://aibot.anagata.in/" \
+-e N8N_EDITOR_BASE_URL="https://aibot.anagata.in/" \
 -v ~/.n8n:/root/.n8n \
 n8nio/n8n
 Please replace simply.anagata.in with your actual domain. After this, you can access n8n on http://simply.anagata.in:5678.
@@ -96,10 +98,3 @@ Then, you can run Certbot and follow the on-screen instructions:
 Copy code
 sudo certbot --nginx -d simply.anagata.in
 After finishing these steps, n8n should be set up with HTTPS on your domain simply.anagata.in.
-
-Now, you should be able to access the n8n web interface via https://simply.anagata.in in your browser without adding the port number :5678.
-
-Note: Don't forget to set up DNS A record for simply.anagata.in to point to your server IP address. You would also need to allow ports 80, 443 (for HTTPS), and 5678 (for n8n) in your firewall.
-
-
-
