@@ -3,6 +3,8 @@ This will allow anyone to install n8n on aws unbuntu with ssl for free tier.
 
 
 
+Installing n8n on Ubuntu: Simple steps and with free SSL
+
 Prerequisites
 
 Docker
@@ -67,26 +69,7 @@ proxy_set_header Connection "upgrade";
         proxy_cache off;
        }
 
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/anagataai.anagata.in/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/anagataai.anagata.in/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-
-}
-server {
-    if ($host = anagataai.anagata.in) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-
-    listen 80;
-    server_name anagataai.anagata.in;
-    return 404; # managed by Certbot
-
-
-}
-Again, replace simply.anagata.in with your actual domain.
+   Again, replace simply.anagata.in with your actual domain.
 
 After that, you can create a symbolic link of this file in the sites-enabled directory:
 
@@ -120,36 +103,3 @@ Note: Don't forget to set up DNS A record for simply.anagata.in to point to your
 
 
 
-
-
-Note: sometimes you can get error like workflow stuck use following process
-
-Try a Different Reverse Proxy Configuration
-If none of the above steps work, you can try a different Nginx configuration for the reverse proxy. Here's an example:
-
-nginx
-
-
-Copy code
-server {
-    listen 80;
-    server_name simply.anagata.in;
-
-    location / {
-        proxy_pass http://127.0.0.1:5678;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-After making the configuration changes, don't forget to reload Nginx:
-
-
-Copy code
-sudo nginx -t
-sudo systemctl reload nginx
-If the issue persists after trying all these steps, you may need to seek further assistance from the n8n community or check the n8n documentation for any additional troubleshooting steps specific to your setup.
