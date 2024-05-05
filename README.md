@@ -35,8 +35,11 @@ sudo docker run -d --restart unless-stopped -it \
 -e VUE_APP_URL_BASE_API="https://aibot.anagata.in/" \
 -e WEBHOOK_TUNNEL_URL="https://aibot.anagata.in/" \
 -e N8N_EDITOR_BASE_URL="https://aibot.anagata.in/" \
+-e N8N_PROTOCOL="https" \
+-e WEBHOOK_URL="https://aibot.anagata.in/webhook/" \
 -v ~/.n8n:/root/.n8n \
 n8nio/n8n
+
 Please replace simply.anagata.in with your actual domain. After this, you can access n8n on http://simply.anagata.in:5678.
 
 Step 3: Installing Nginx
